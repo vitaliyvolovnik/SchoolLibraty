@@ -12,7 +12,7 @@ namespace BLL.Services.Interfaces
     {
         Task<Load?> AddAsync(Load load);
 
-        Task<Load?> RemoveAsync(Load load);
+        Task RemoveAsync(int id);
         Task<Load?> GetAsync(int id);
 
         Task<ObservableCollection<Load>> GetAllAsync();

@@ -1,4 +1,5 @@
 ﻿using BLL.Services.Interfaces;
+using DAL.Repositories;
 using Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -11,74 +12,89 @@ namespace BLL.Services
 {
     public class PersonService : IPersonService, IStudentService, IAuthorService
     {
-        public Task<Person?> AddAsync(Person person)
+
+        private readonly PersonRepository _personRepository;
+        private readonly StudentRepository _studentRepository;
+        private readonly AuthorRepository _authorRepository;
+
+        public PersonService(PersonRepository personRepository, StudentRepository studentRepository, AuthorRepository authorRepository)
         {
-            throw new NotImplementedException();
+            _authorRepository = authorRepository;
+            _personRepository = personRepository;
+            _studentRepository = studentRepository;
         }
 
-        public Task<Student?> AddAsync(Student student)
+
+        public async Task<Person?> AddAsync(Person person)
         {
-            throw new NotImplementedException();
+            return await _personRepository.CreateAsync(person);
+        }
+
+        public async Task<Student?> AddAsync(Student student)
+        {
+            return await _studentRepository.CreateAsync(student);
         }
 
         public Task<Author?> AddAsync(Author author)
         {
-            throw new NotImplementedException();
+            return _authorRepository.CreateAsync(author);
         }
 
-        public Task<ObservableCollection<Person>> GetAllAsync()
+        public async Task<ObservableCollection<Person>> GetAllPersonsAsync()
         {
-            throw new NotImplementedException();
+            return await _personRepository.GetAllAsync();
         }
 
-        public Task<Person> GetAsync(int id)
+        public async Task<Person?> GetPersonAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _personRepository.FindFirstAsync(person => person.Id == id);
         }
 
         public Task<ObservableCollection<Student>> GetByClassAsync(int Class)
         {
+            return _studentRepository.FindByConditionalAsync(student => student.Class == Class);
+        }
+
+        public async Task<ObservableCollection<Student>> GetByNameAsync(Person person)
+        {
+            //to do:Change method signature
             throw new NotImplementedException();
         }
 
-        public Task<ObservableCollection<Student>> GetByNameAsync(Person person)
+        public async Task RemoveAsync(Person person)
         {
-            throw new NotImplementedException();
+            await _personRepository.DeleteAsync(x => x.Id == person.Id ||
+                (x.Firstname.Equals(person.Firstname) && x.Lastname.Equals(person.Lastname)));
         }
 
-        public Task RemoveAsync(Person person)
+        public async Task RemoveStudentAsync(int studentId)
         {
-            throw new NotImplementedException();
+            await _studentRepository.DeleteAsync(student => student.Id == studentId);
         }
 
-        public Task RemoveAsync(int id)
+        public async Task<Person?> UpdateAsync(Person person, int personId)
         {
-            throw new NotImplementedException();
+            return await _personRepository.UpdateAsync(person, personId);
         }
 
-        public Task<Person?> UpdateAsync(Person person, int personId)
+        public async Task<Student?> UpdateAsync(Student student, int studentId)
         {
-            throw new NotImplementedException();
+            return await _studentRepository.UpdateAsync(student, studentId);
         }
 
-        public Task<Student?> UpdateAsync(Student student, int studentId)
+        public async Task<ObservableCollection<Student>> GetAllStudentsAsync()
         {
-            throw new NotImplementedException();
+            return await _studentRepository.GetAllAsync();
         }
 
-        Task<ObservableCollection<Student>> IStudentService.GetAllAsync()
+        public async Task<ObservableCollection<Author>> GetAllAuthorsAsync()
         {
-            throw new NotImplementedException();
+            return await _authorRepository.GetAllAsync();
         }
 
-        Task<ObservableCollection<Author>> IAuthorService.GetAllAsync()
+        public async Task<Student?> GetStudentAsync(int id)
         {
-            throw new NotImplementedException();
-        }
-
-        Task<Student> IStudentService.GetAsync(int id)
-        {
-            throw new NotImplementedException();
+            return await _studentRepository.FindFirstAsync(person => person.Id == id);
         }
     }
 }

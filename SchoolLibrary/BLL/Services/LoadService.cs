@@ -1,10 +1,12 @@
 ﻿using BLL.Services.Interfaces;
+using DAL.Repositories;
 using Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Design.Serialization;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,39 +14,50 @@ namespace BLL.Services
 {
     internal class LoadService : ILoadSerivce
     {
-        public Task<Load?> AddAsync(Load load)
+
+        private readonly LoadRepository _loadRepository;
+
+        public LoadService(LoadRepository loadRepository)
         {
-            throw new NotImplementedException();
+            _loadRepository = loadRepository;
         }
 
-        public Task<ObservableCollection<Load>> GetAllAsync()
+
+
+        public async Task<Load?> AddAsync(Load load)
         {
-            throw new NotImplementedException();
+            return await _loadRepository.CreateAsync(load);
         }
 
-        public Task<Load?> GetAsync(int id)
+        public async Task<ObservableCollection<Load>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _loadRepository.GetAllAsync();
         }
 
-        public Task<ObservableCollection<Load>> GetByBookAsync(int bookId)
+        public async Task<Load?> GetAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _loadRepository.FindFirstAsync(load => load.Id == id);
         }
 
-        public Task<ObservableCollection<Load>> GetByStudent(int studentId)
+        public async Task<ObservableCollection<Load>> GetByBookAsync(int bookId)
         {
-            throw new NotImplementedException();
+            return await _loadRepository.FindByConditionalAsync(load => load.Books.Any(book => book.Id == bookId));
         }
 
-        public Task<ObservableCollection<Load>> GetOverdue()
+        public async Task<ObservableCollection<Load>> GetByStudent(int studentId)
         {
-            throw new NotImplementedException();
+            return await _loadRepository.FindByConditionalAsync(load => load.StudentId == studentId);
         }
 
-        public Task<Load?> RemoveAsync(Load load)
+        public async Task<ObservableCollection<Load>> GetOverdue()
         {
-            throw new NotImplementedException();
+            return await _loadRepository.FindByConditionalAsync(load => load.ReturnDate < DateTime.Now);
         }
+
+        public async Task RemoveAsync(int id)
+        {
+            await _loadRepository.DeleteAsync(load => load.Id == id);
+        }
+
     }
 }

@@ -14,9 +14,9 @@ namespace BLL.Services.Interfaces
 
         Task<Person?> UpdateAsync(Person person,int personId);
         Task RemoveAsync(Person person);
-        Task<Person> GetAsync(int id);
+        Task<Person> GetPersonAsync(int id);
 
-        Task<ObservableCollection<Person>> GetAllAsync();
+        Task<ObservableCollection<Person>> GetAllPersonsAsync();
            
     }
 }

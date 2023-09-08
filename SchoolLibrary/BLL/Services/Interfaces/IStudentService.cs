@@ -14,10 +14,10 @@ namespace BLL.Services.Interfaces
         Task<Student?> AddAsync(Student student);
 
         Task<Student?> UpdateAsync(Student student,int studentId);
-        Task RemoveAsync(int id);
-        Task<Student> GetAsync(int id);
+        Task RemoveStudentAsync(int studentId);
+        Task<Student> GetStudentAsync(int id);
         
-        Task<ObservableCollection<Student>> GetAllAsync();
+        Task<ObservableCollection<Student>> GetAllStudentsAsync();
         Task<ObservableCollection<Student>> GetByNameAsync(Person person);
         Task<ObservableCollection<Student>> GetByClassAsync(int Class);
 

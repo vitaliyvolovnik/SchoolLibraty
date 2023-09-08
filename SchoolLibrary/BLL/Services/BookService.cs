@@ -1,4 +1,5 @@
 ﻿using BLL.Services.Interfaces;
+using DAL.Repositories;
 using Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -9,61 +10,83 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    internal class BookService : IBookService, IBookCollectionService
+    public class BookService : IBookService, IBookCollectionService
     {
-        public Task<Book?> AddAsync(Book book)
+
+        private readonly BookRepository _bookRepository;
+        private readonly BookCollectionRepository _bookCollectionRepository;
+
+
+
+        public BookService(BookRepository bookRepository, BookCollectionRepository bookCollectionRepository)
         {
-            throw new NotImplementedException();
+            _bookCollectionRepository = bookCollectionRepository;
+            _bookRepository = bookRepository;
         }
 
-        public Task<BookCollection?> AddAsync(BookCollection collection)
+
+
+
+
+        public async Task<Book?> AddAsync(Book book)
         {
-            throw new NotImplementedException();
+            return await _bookRepository.CreateAsync(book);
         }
 
-        public Task<Book?> AddCountAsync(int id, int count)
+        public async Task<BookCollection?> AddAsync(BookCollection collection)
         {
-            throw new NotImplementedException();
+            return await _bookCollectionRepository.CreateAsync(collection);
         }
 
-        public Task<ObservableCollection<Book>> GetAllAsync()
+        public async Task<Book?> AddCountAsync(int id, int count)
         {
-            throw new NotImplementedException();
+            return await _bookRepository.AddCount(id, count);
         }
 
-        public Task<Book?> GetAsync(int id)
+        public async Task<ObservableCollection<Book>> GetAllBookAsync()
         {
-            throw new NotImplementedException();
+            return await _bookRepository.GetAllAsync();
         }
 
-        public Task<ObservableCollection<Book>> GetByAuthorAsync(int authorId)
+        public async Task<Book?> GetBookAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _bookRepository.FindFirstAsync(book => book.Id == id);
         }
 
-        public Task<ObservableCollection<Book>> GetByAuthorAsync(Person person)
+        public async Task<ObservableCollection<Book>> GetByAuthorAsync(int authorId)
         {
-            throw new NotImplementedException();
+            return await _bookRepository.FindByConditionalAsync(book => book.Authors.Any(author => author.Id == authorId));
         }
 
-        public Task<ObservableCollection<Book>> GetByStrAsync(string text)
+        public async Task<ObservableCollection<Book>> GetByAuthorAsync(Person person)
         {
-            throw new NotImplementedException();
+            return await _bookRepository.FindByConditionalAsync(book => book.Authors
+            .Any(author => author.Person.Firstname.Contains(person.Firstname)
+                || author.Person.Lastname.Contains(person.Lastname)));
         }
 
-        public Task RemoveAsync(int id)
+        public async Task<ObservableCollection<Book>> GetByStrAsync(string text)
         {
-            throw new NotImplementedException();
+            return await _bookRepository.FindByConditionalAsync(book =>
+            book.Name.Contains(text) ||
+            book.Year.Contains(text) ||
+            book.Authors.Any(author => author.Person.Firstname.Contains(text)
+                || author.Person.Lastname.Contains(text)));
         }
 
-        Task<ObservableCollection<BookCollection>> IBookCollectionService.GetAllAsync()
+        public async Task RemoveBookAsync(int id)
         {
-            throw new NotImplementedException();
+            await _bookRepository.DeleteAsync(book => book.Id == id);
         }
 
-        Task<BookCollection?> IBookCollectionService.GetAsync(int id)
+        public async Task<ObservableCollection<BookCollection>> GetAllCollectionsAsync()
         {
-            throw new NotImplementedException();
+            return await _bookCollectionRepository.GetAllAsync();
+        }
+
+        public async Task<BookCollection?> GetCollectionAsync(int id)
+        {
+            return await _bookCollectionRepository.FindFirstAsync(book => book.Id == id);
         }
     }
 }

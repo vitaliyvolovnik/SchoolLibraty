@@ -9,7 +9,7 @@ namespace Domain.Models
 {
     public class Load
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         public ObservableCollection<Book> Books { get; set; } = new();
 

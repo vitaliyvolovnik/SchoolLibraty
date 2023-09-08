@@ -12,6 +12,9 @@ namespace Domain.Models
         public int Id { get; set; }
         public string? Name { get; set; }
         public string? Year { get; set; }
+        public int? Count { get; set; }
+
+
         public ObservableCollection<Author> Authors { get; set; } = new();
 
         public ObservableCollection<BookCollection> Collections { get; set; } = new();

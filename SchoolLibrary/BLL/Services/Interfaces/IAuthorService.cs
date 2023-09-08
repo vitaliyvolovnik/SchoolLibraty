@@ -13,7 +13,7 @@ namespace BLL.Services.Interfaces
 
         Task<Author?> AddAsync(Author author);
 
-        Task<ObservableCollection<Author>> GetAllAsync();
+        Task<ObservableCollection<Author>> GetAllAuthorsAsync();
     
        
     }

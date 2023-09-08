@@ -40,7 +40,7 @@ namespace DAL.Repositories
             }
         }
 
-        public virtual async Task<T?> UpdateAsync(T entity)
+        public virtual async Task<T?> UpdateAsync(T entity,int entityId)
         {
             throw new NotImplementedException();
         }

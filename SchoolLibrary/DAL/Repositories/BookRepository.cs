@@ -1,6 +1,7 @@
 ﻿using DAL.Context;
 using Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -35,6 +36,20 @@ namespace DAL.Repositories
         public override async Task<Book?> FindFirstAsync(Expression<Func<Book, bool>> predicate)
         {
             return await Entities.FirstOrDefaultAsync(predicate);
+        }
+
+        public async Task<Book?> AddCount(int bookId, int count)
+        {
+            var book = await FindFirstAsync(book => book.Id == bookId);
+
+            if (book == null) return null;
+
+            book.Count += count;
+            
+
+            await SaveChangesAsync();
+            return book;
+
         }
     }
 }

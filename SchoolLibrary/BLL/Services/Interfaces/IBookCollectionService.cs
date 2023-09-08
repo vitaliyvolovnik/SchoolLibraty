@@ -13,9 +13,9 @@ namespace BLL.Services.Interfaces
 
         Task<BookCollection?> AddAsync(BookCollection collection);
 
-        Task<BookCollection?> GetAsync(int id);
+        Task<BookCollection?> GetCollectionAsync(int id);
 
-        Task<ObservableCollection<BookCollection>> GetAllAsync();
+        Task<ObservableCollection<BookCollection>> GetAllCollectionsAsync();
 
     }
 }
