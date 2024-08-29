@@ -4,9 +4,76 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SchoolLibrary"
+        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="700" Width="1200">
     <Grid>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.2*" MaxWidth="300px" MinWidth="200px"></ColumnDefinition>
+            <ColumnDefinition Width="0.7*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80px"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label Grid.ColumnSpan="2" Background="#0295DF">
+            
+        </Label>
+        <StackPanel Grid.Column="0" Grid.Row="1" Background="#FFFFFF" HorizontalAlignment="Left">
+            <StackPanel Orientation="Horizontal" Grid.Row="5" Height="50" Width="240"
+                        MouseLeave="Button_MouseLeave" Name="BooksStackPanel" MouseEnter="Button_MouseEnter">
+                <Grid Width="0" Background="#0295DF" Name="Bhrid1"></Grid>
+                <Button Background="{x:Null}" BorderThickness="0" Name="BooksPageBtn"
+                        Height="50" Width="240" Command="{Binding BookPageCommand}">
+                    <StackPanel Orientation="Horizontal" Width="220" >
+                        <md:PackIcon VerticalAlignment="Center" Kind="BookOutline"
+                                 Foreground="#000000" Width="32px" Height="32px"></md:PackIcon>
+                        <Label FontSize="24" Foreground="#000000" VerticalAlignment="Center">Книги</Label>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Row="5" Height="50" Width="240"
+                        MouseLeave="Button_MouseLeave" Name="StudentsStackPanel" MouseEnter="Button_MouseEnter">
+                <Grid Width="0" Background="#0295DF" Name="Bhrid2"></Grid>
+                <Button Background="{x:Null}" BorderThickness="0" Name="StudentsPageBtn"
+                        Height="50" Width="240" Command="{Binding StudentPageCommand}">
+                    <StackPanel Orientation="Horizontal" Width="220" >
+                        <md:PackIcon VerticalAlignment="Center" Kind="AccountSchoolOutline"
+                                 Foreground="#000000" Width="32px" Height="32px"></md:PackIcon>
+                        <Label FontSize="24" Foreground="#000000" VerticalAlignment="Center">Учні</Label>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Row="5" Height="50" Width="240"
+                        MouseLeave="Button_MouseLeave" Name="CollectionStackPanel" MouseEnter="Button_MouseEnter">
+                <Grid Width="0" Background="#0295DF" Name="Bhrid3"></Grid>
+                <Button Background="{x:Null}" BorderThickness="0" Name="HallsPageBtn"
+                        Height="50" Width="240" Command="{Binding CollectionPageCommand}">
+                    <StackPanel Orientation="Horizontal" Width="220" >
+                        <md:PackIcon VerticalAlignment="Center" Kind="RhombusSplitOutline"
+                                 Foreground="#000000" Width="32px" Height="32px"></md:PackIcon>
+                        <Label FontSize="24" Foreground="#000000" VerticalAlignment="Center">Колекції</Label>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Row="5" Height="50" Width="240"
+                        MouseLeave="Button_MouseLeave" Name="LoadStackPanel" MouseEnter="Button_MouseEnter">
+                <Grid Width="0" Background="#0295DF" Name="Bhrid4"></Grid>
+                <Button Background="{x:Null}" BorderThickness="0" Name="LoadPageBtn"
+                        Height="50" Width="240" Command="{Binding LoadPageCommand}">
+                    <StackPanel Orientation="Horizontal" Width="220" >
+                        <md:PackIcon VerticalAlignment="Center" Kind="Upload"
+                                 Foreground="#000000" Width="32px" Height="32px"></md:PackIcon>
+                        <Label FontSize="24" Foreground="#000000" VerticalAlignment="Center">Видача книг</Label>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+            
+        </StackPanel>
+        <Frame Grid.Column="1" Grid.Row="1" 
+               Background="#E5E5E5" NavigationUIVisibility="Hidden"
+               Content="{Binding CurrentPage, UpdateSourceTrigger=PropertyChanged}">
+            
+        </Frame>
     </Grid>
 </Window>

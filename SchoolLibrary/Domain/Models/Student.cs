@@ -11,10 +11,10 @@ namespace Domain.Models
     {
         public int Id { get; set; }
 
-        public Person? Person { get; set; }
+        public Person? Person { get; set; } = new();
         public int? PersonId { get; set; }
 
-        public int Class { get; set; }
+        public int Class { get; set; } = 1;
 
         public bool IsVisible { get; set; }
 

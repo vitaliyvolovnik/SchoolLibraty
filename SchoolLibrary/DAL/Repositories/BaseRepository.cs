@@ -20,11 +20,8 @@ namespace DAL.Repositories
             _context = context;
         }
 
-
         private DbSet<T> enitities;
         protected DbSet<T> Entities => enitities ??= _context.Set<T>();
-
-
 
         public virtual async Task<T?> CreateAsync(T entity)
         {

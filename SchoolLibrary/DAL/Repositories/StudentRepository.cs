@@ -36,7 +36,7 @@ namespace DAL.Repositories
         {
             return await Entities
                 .Include(student => student.Person)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(predicate);
         }
 
         public async Task UpClass()

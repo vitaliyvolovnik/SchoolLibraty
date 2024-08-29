@@ -43,7 +43,7 @@ namespace DAL.Repositories
 
 
 
-        public override async Task<BookCollection?> UpdateAsync(BookCollection entity)
+        /*public override async Task<BookCollection?> UpdateAsync(BookCollection entity)
         {
             var collection =await this.FindFirstAsync(collection => collection.Id == entity.Id);
 
@@ -56,6 +56,6 @@ namespace DAL.Repositories
                 collection.Books = entity.Books;
 
             return collection;
-        }
+        }*/
     }
 }

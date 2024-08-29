@@ -94,7 +94,7 @@ namespace BLL.Services
 
         public async Task<Student?> GetStudentAsync(int id)
         {
-            return await _studentRepository.FindFirstAsync(person => person.Id == id);
+            return await _studentRepository.FindFirstAsync(stundet => stundet.Id == id);
         }
     }
 }

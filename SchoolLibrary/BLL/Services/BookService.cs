@@ -16,17 +16,11 @@ namespace BLL.Services
         private readonly BookRepository _bookRepository;
         private readonly BookCollectionRepository _bookCollectionRepository;
 
-
-
         public BookService(BookRepository bookRepository, BookCollectionRepository bookCollectionRepository)
         {
             _bookCollectionRepository = bookCollectionRepository;
             _bookRepository = bookRepository;
         }
-
-
-
-
 
         public async Task<Book?> AddAsync(Book book)
         {

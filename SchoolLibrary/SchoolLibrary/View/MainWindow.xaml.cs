@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SchoolLibrary.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,25 @@ namespace SchoolLibrary
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+
+        private readonly MainViewModel _viewModel;
+        public MainWindow(MainViewModel mainViewModel)
         {
             InitializeComponent();
+            _viewModel = mainViewModel;
+            this.DataContext =_viewModel;
+        }
+        private void Button_MouseLeave(object sender, MouseEventArgs e)
+        {
+            var panel = (StackPanel)sender;
+            var grid = (Grid)panel.Children[0];
+            grid.Width = 0;
+        }
+        private void Button_MouseEnter(object sender, MouseEventArgs e)
+        {
+            var panel = (StackPanel)sender;
+            var grid = (Grid)panel.Children[0];
+            grid.Width = 7;
         }
     }
 }
